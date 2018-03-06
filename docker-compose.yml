@@ -6,62 +6,86 @@
 # Thank's to @hernandev
 ################################################################
 
-# v3 syntax
-version: '3'
-
-# Named volumes
-volumes:
-  # Postgres Data
-  sandbox-postgres-data:
-    driver: local
-
-  # Redis Data
-  sandbox-redis-data:
-    driver: local
-
+version: '3.4'
 services:
-  # Postgres (10.2)
-  postgres:
-    image: postgres:10.2-alpine
-    container_name: sandbox-postgres
-    volumes:
-      - sandbox-postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=sandbox
-      - POSTGRES_DB=sandbox
-      - POSTGRES_USER=sandbox
-
-  # Redis
-  cache:
-    image: redis:4.0.8-alpine
-    container_name: sandbox-redis
-    command: --appendonly yes
-    volumes:
-      - sandbox-redis-data:/data
-    ports:
-      - "6379:6379"
-
-  # PHP (with Nginx)
   app:
     image: ambientum/php:7.2-nginx
-    container_name: sandbox-app
+    container_name: app
+    ports:
+      - 80:8080
+    volumes:
+      - .:/var/www/app
+    depends_on:
+      - pgsql
+      - mariadb
+      - redis
+    links:
+      - pgsql
+      - mariadb
+      - redis
+    networks:
+      - laravel
+
+  pgsql:
+    image: postgres:10.2-alpine
+    container_name: pgsql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: sandbox
+      POSTGRES_USER: sandbox
+      POSTGRES_PASSWORD: sandbox
+    volumes:
+      - laravelpgsql:/var/lib/postgresql/data
+    networks:
+      - laravel
+
+  mariadb:
+    image: mariadb:10.3
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: sandbox
+      MYSQL_DATABASE: sandbox
+      MYSQL_USER: sandbox
+      MYSQL_PASSWORD: sandbox
+    volumes:
+      - laravelmariadb:/var/lib/mariadb
+    networks:
+      - laravel
+
+  redis:
+    image: redis:4.0.8-alpine
+    container_name: redis
+    command: --appendonly yes
+    volumes:
+      - laravelredis:/data
+    ports:
+      - 6379:6379
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    networks:
+     - laravel
+
+  npm:
+    image: ambientum/node:9
+    container_name: npm
     volumes:
       - .:/var/www/app
     ports:
-      - "80:8080"
-    links:
-      - postgres
-      - cache
+      - 8080:8080
 
-  # Laravel Horizon
-  horizon:
-    image: ambientum/php:7.2
-    container_name: sandbox-horizon
-    command: php artisan horizon
-    volumes:
-      - .:/var/www/app
-    links:
-      - postgres
-      - cache
+networks:
+  laravel:
+    driver: bridge
+volumes:
+  laravelpgsql:
+    driver: local
+  laravelmariadb:
+    driver: local
+  laravelredis:
+    driver: local
+    
