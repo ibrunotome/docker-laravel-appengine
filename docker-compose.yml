@@ -10,7 +10,7 @@ version: '3.4'
 services:
   app:
     image: ambientum/php:7.2-nginx
-    container_name: app
+    container_name: sandbox-app
     ports:
       - 80:8080
     volumes:
@@ -28,7 +28,7 @@ services:
 
   pgsql:
     image: postgres:10.2-alpine
-    container_name: pgsql
+    container_name: sandbox-pgsql
     ports:
       - 5432:5432
     environment:
@@ -36,13 +36,13 @@ services:
       POSTGRES_USER: sandbox
       POSTGRES_PASSWORD: sandbox
     volumes:
-      - laravelpgsql:/var/lib/postgresql/data
+      - pgsql:/var/lib/postgresql/data
     networks:
       - laravel
 
   mariadb:
     image: mariadb:10.3
-    container_name: mariadb
+    container_name: sandbox-mariadb
     ports:
       - 3306:3306
     environment:
@@ -51,28 +51,28 @@ services:
       MYSQL_USER: sandbox
       MYSQL_PASSWORD: sandbox
     volumes:
-      - laravelmariadb:/var/lib/mariadb
+      - mariadb:/var/lib/mariadb
     networks:
       - laravel
 
   redis:
     image: redis:4.0.8-alpine
-    container_name: redis
+    container_name: sandbox-redis
     command: --appendonly yes
     volumes:
-      - laravelredis:/data
+      - redis:/data
     ports:
       - 6379:6379
 
   selenium:
     image: selenium/standalone-chrome
-    container_name: selenium
+    container_name: sandbox-selenium
     networks:
      - laravel
 
   npm:
     image: ambientum/node:9
-    container_name: npm
+    container_name: sandbox-npm
     volumes:
       - .:/var/www/app
     ports:
@@ -82,10 +82,9 @@ networks:
   laravel:
     driver: bridge
 volumes:
-  laravelpgsql:
+  pgsql:
     driver: local
-  laravelmariadb:
+  mariadb:
     driver: local
-  laravelredis:
+  redis:
     driver: local
-    
