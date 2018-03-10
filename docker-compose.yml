@@ -63,6 +63,8 @@ services:
       - redis:/data
     ports:
       - 6379:6379
+    networks:
+     - laravel
 
   selenium:
     image: selenium/standalone-chrome
