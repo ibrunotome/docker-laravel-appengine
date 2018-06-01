@@ -27,7 +27,7 @@ services:
       - laravel
 
   pgsql:
-    image: postgres:10.2-alpine
+    image: postgres:10.4-alpine
     container_name: sandbox-pgsql
     ports:
       - 5432:5432
