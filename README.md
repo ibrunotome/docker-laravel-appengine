@@ -1,5 +1,5 @@
 # docker-laravel
-Laravel dockerized with: ambientum/php:7.2-nginx, ambientum/npm, postgres:10.2-alpine, mariadb:10.3, redis:4.0.8-alpine and others.
+Laravel dockerized with: ambientum/php:7.2-nginx, ambientum/npm, postgres:10.4-alpine, mariadb:10.3, redis:4.0.9-alpine and others.
 
 ## How to use
 
