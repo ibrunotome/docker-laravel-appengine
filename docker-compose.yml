@@ -56,7 +56,7 @@ services:
       - laravel
 
   redis:
-    image: redis:4.0.8-alpine
+    image: redis:4.0.9-alpine
     container_name: sandbox-redis
     command: --appendonly yes
     volumes:
