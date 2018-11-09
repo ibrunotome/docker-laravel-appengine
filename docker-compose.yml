@@ -1,92 +1,94 @@
-################################################################
-# ATENTION:
-#
-# Replace all occurences of sandbox with your project's name
-#
-# Thank's to @hernandev
-################################################################
-
-version: '3.4'
+version: '3.6'
 services:
   app:
-    image: ambientum/php:7.2-nginx
-    container_name: sandbox-app
+    build: ./
+    container_name: default-service-app
     ports:
-      - 80:8080
+    - 80:8080
+    environment:
+    - DOCUMENT_ROOT=/app/public
+    - WHITELIST_FUNCTIONS=exec,proc_open,proc_close
+    - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
     volumes:
-      - .:/var/www/app
+    - .:/app
     depends_on:
-      - pgsql
-      - mariadb
-      - redis
-    links:
-      - pgsql
-      - mariadb
-      - redis
+    - pgsql
+    - pgsql-tests
+    - redis-broadcast
+    - redis-cache
+    - redis-queue
     networks:
-      - laravel
+    - default-network
 
   pgsql:
     image: postgres:10.4-alpine
-    container_name: sandbox-pgsql
+    container_name: default-service-pgsql
     ports:
-      - 5432:5432
+    - 5433:5432
     environment:
-      POSTGRES_DB: sandbox
-      POSTGRES_USER: sandbox
-      POSTGRES_PASSWORD: sandbox
+      POSTGRES_DB: default
+      POSTGRES_USER: default
+      POSTGRES_PASSWORD: default
     volumes:
-      - pgsql:/var/lib/postgresql/data
+    - default-pgsql:/var/lib/postgresql/data
     networks:
-      - laravel
+    - default-network
 
-  mariadb:
-    image: mariadb:10.3
-    container_name: sandbox-mariadb
+  pgsql-tests:
+    image: postgres:10.4-alpine
+    container_name: default-service-pgsql-tests
     ports:
-      - 3306:3306
+    - 5434:5432
     environment:
-      MYSQL_ROOT_PASSWORD: sandbox
-      MYSQL_DATABASE: sandbox
-      MYSQL_USER: sandbox
-      MYSQL_PASSWORD: sandbox
+      POSTGRES_DB: default_tests
+      POSTGRES_USER: default_tests
+      POSTGRES_PASSWORD: default_tests
     volumes:
-      - mariadb:/var/lib/mariadb
+    - default-pgsql-tests:/var/lib/postgresql/data
     networks:
-      - laravel
+    - default-network
 
-  redis:
-    image: redis:4.0.9-alpine
-    container_name: sandbox-redis
-    command: --appendonly yes
+  redis-broadcast:
+    image: redis:4.0.11-alpine
+    container_name: default-service-redis-broadcast
     volumes:
-      - redis:/data
+    - default-redis-broadcast:/data
     ports:
-      - 6379:6379
+    - 6376:6379
     networks:
-     - laravel
+    - default-network
 
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: sandbox-selenium
-    networks:
-     - laravel
-
-  npm:
-    image: ambientum/node:9
-    container_name: sandbox-npm
+  redis-cache:
+    image: redis:4.0.11-alpine
+    container_name: default-service-redis-cache
     volumes:
-      - .:/var/www/app
+    - default-redis-cache:/data
     ports:
-      - 8080:8080
+    - 6377:6379
+    networks:
+    - default-network
+
+  redis-queue:
+    image: redis:4.0.11-alpine
+    container_name: default-service-redis-queue
+    volumes:
+    - default-redis-queue:/data
+    ports:
+    - 6378:6379
+    networks:
+    - default-network
 
 networks:
-  laravel:
+  default-network:
     driver: bridge
 volumes:
-  pgsql:
+  default-pgsql:
     driver: local
-  mariadb:
+  default-pgsql-tests:
     driver: local
-  redis:
+  default-redis-broadcast:
+    driver: local
+  default-redis-cache:
+    driver: local
+  default-redis-queue:
     driver: local
