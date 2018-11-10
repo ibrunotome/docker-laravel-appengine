@@ -1,4 +1,4 @@
-# docker-laravel
+# Laravel dockerized with official Google App Engine flexible php environment + swoole.
 Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others.
 
 ## How to use locally
@@ -13,12 +13,14 @@ Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-a
 
 ## How to use in Google App Engine (GAE)
 
-Just put the files on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`. Thats it 🎉
+Just put the files on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`. Thats it 🎉.
 
-## Extra files
+## Tips to customization
 
-You can edit php.ini, nginx.conf and php-fpm.conf files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`
+You can edit `php.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`.
+
+`additional-suppervisord.conf` file is ready to run horizon at the start and the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
-I did some edits in the Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance. If you want use it, you can install this package: https://github.com/swooletw/laravel-swoole. If you don't wanna to use swoole extension, then remove it from php.ini and Dockerfile or call the gcr.io/google-appengine/php72:latest directly from the docker-compose.yml file.
+I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance. If you want use it, you can install this package: https://github.com/swooletw/laravel-swoole. If you don't wanna to use swoole extension, then remove it from php.ini and Dockerfile or call the gcr.io/google-appengine/php72:latest directly from the docker-compose.yml file.
