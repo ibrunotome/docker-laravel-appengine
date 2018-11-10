@@ -1,10 +1,12 @@
 # Laravel dockerized with official Google App Engine flexible php environment + swoole.
-Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others.
+Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others (ready for production).
+
+You can build this image for production on GAE flexible using auto managed redis and database by Google Cloud Plataform building from the Dockerfile, or run all locally using the docker-compose file.
 
 ## How to use locally
 
-- You need to have docker installed
-- Put docker-compose.yml file on the root of your laravel project
+- You need to have docker installed.
+- Put docker-compose.yml file on the root of your laravel project.
 - Run ```docker-compose up -d```
 - Run ```docker-compose run app composer update```
 - Thats all folks :) Now you have locally exactly the same image that you run on GAE flexible php environment.
@@ -17,7 +19,7 @@ Just put the files on the root of your laravel project, then change your [app.ya
 
 ## Tips to customization
 
-You can edit `php.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`.
+You can edit `php.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`
 
 `additional-suppervisord.conf` file is ready to run horizon at the start and the `php artisan schedule:run` command each minute.
 
