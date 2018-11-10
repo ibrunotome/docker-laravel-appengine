@@ -1,5 +1,5 @@
 # docker-laravel
-Laravel dockerized with: gcr.io/google-appengine/php72:latest, postgres:10.4-alpine, redis:4.0.11-alpine and others.
+Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others.
 
 ## How to use locally
 
