@@ -1,4 +1,4 @@
-# Laravel dockerized with official Google App Engine flexible php environment + swoole.
+# Laravel dockerized with official Google App Engine flexible php environment + swoole
 Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others (ready for production).
 
 You can build this image for production on GAE flexible using auto managed redis and database by Google Cloud Plataform building from the Dockerfile, or run all locally using the docker-compose file.
@@ -10,18 +10,17 @@ You can build this image for production on GAE flexible using auto managed redis
 - Run ```docker-compose up -d```
 - Run ```docker-compose run app composer update```
 - Thats all folks :) Now you have locally exactly the same image that you run on GAE flexible php environment.
-
 - Of course, remember to bind your .env variables and hosts with your docker-compose.yml file.
 
 ## How to use in Google App Engine (GAE)
 
-Just put the files on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`. Thats it 🎉.
+Just put the files on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`. Thats it 🎉. You can learn more about GAE here: https://cloud.google.com/appengine/docs/flexible/
 
 ## Tips to customization
 
 You can edit `php.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`
 
-`additional-suppervisord.conf` file is ready to run horizon at the start and the `php artisan schedule:run` command each minute.
+The `additional-suppervisord.conf` file is ready to run horizon at the start and the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
