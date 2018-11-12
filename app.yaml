@@ -1,0 +1,25 @@
+runtime: custom
+env: flex
+
+automatic_scaling:
+  min_num_instances: 2
+  max_num_instances: 5
+
+resources:
+  cpu: 2
+  memory_gb: 2
+  disk_size_gb: 10
+
+runtime_config:
+  document_root: public
+  whitelist_functions: exec,proc_open,proc_close
+  enable_stackdriver_integration: true
+
+readiness_check:
+  app_start_timeout_sec: 1800
+
+beta_settings:
+  cloud_sql_instances: <your db connections>
+  
+env_variables:
+  key: value
