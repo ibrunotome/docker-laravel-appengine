@@ -9,6 +9,8 @@ services:
     - DOCUMENT_ROOT=/app/public
     - WHITELIST_FUNCTIONS=exec,proc_open,proc_close
     - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
+    - OPCACHE_VALIDATE_TIMESTAMPS=0
+    - OPCACHE_FILE_UPDATE_PROTECTION=0
     volumes:
     - .:/app
     depends_on:
