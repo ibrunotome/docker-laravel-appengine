@@ -18,9 +18,9 @@ Just put the files on the root of your laravel project, then change your [app.ya
 
 ## Tips to customization
 
-You can edit `php.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add then to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`
+You can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf` and `php-fpm-user.conf` files, just add them to the root folder and make your changes, they will be enabled on the next `docker-compose up --build`
 
-The `additional-suppervisord.conf` file is ready to run horizon at the start and the `php artisan schedule:run` command each minute.
+The `suppervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
