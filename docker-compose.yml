@@ -8,9 +8,15 @@ services:
     environment:
     - DOCUMENT_ROOT=/app/public
     - WHITELIST_FUNCTIONS=exec,proc_open,proc_close
-    - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
-    - OPCACHE_VALIDATE_TIMESTAMPS=0
-    - OPCACHE_FILE_UPDATE_PROTECTION=0
+    - SKIP_LOCKDOWN_DOCUMENT_ROOT=1
+    - OPCACHE_VALIDATE_TIMESTAMPS=1
+    - OPCACHE_FILE_UPDATE_PROTECTION=1
+
+    # In production environment, you can change the app.yaml with the below variables to get a better performance
+    # SKIP_LOCKDOWN_DOCUMENT_ROOT=0
+    # OPCACHE_VALIDATE_TIMESTAMPS=0
+    # OPCACHE_FILE_UPDATE_PROTECTION=0
+
     volumes:
     - .:/app
     depends_on:

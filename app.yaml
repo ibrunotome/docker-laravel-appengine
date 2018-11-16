@@ -20,6 +20,9 @@ readiness_check:
 
 beta_settings:
   cloud_sql_instances: <your db connections>
-  
+
+skip_files:
+  - key: value
+
 env_variables:
-  key: value
+  KEY: VALUE
