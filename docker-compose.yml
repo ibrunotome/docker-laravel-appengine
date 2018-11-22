@@ -1,20 +1,26 @@
 version: '3.6'
 services:
   app:
-    build: ./
+    build:
+      context: .
+      args:
+      - ENABLE_XDEBUG=true
     container_name: default-service-app
     ports:
     - 80:8080
     environment:
     - DOCUMENT_ROOT=/app/public
-    - WHITELIST_FUNCTIONS=exec,proc_open,proc_close
-    - SKIP_LOCKDOWN_DOCUMENT_ROOT=1
+    - DISABLE_FUNCTIONS=
+    - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
     - OPCACHE_VALIDATE_TIMESTAMPS=1
     - OPCACHE_FILE_UPDATE_PROTECTION=1
+    - OPCACHE_SAVE_COMMENTS=1
+    - OPCACHE_ENABLE_FILE_OVERRIDE=1
 
     # In production environment, you can change the app.yaml with the below variables to get a better performance
     # SKIP_LOCKDOWN_DOCUMENT_ROOT=0
     # OPCACHE_VALIDATE_TIMESTAMPS=0
+    # OPCACHE_FILE_UPDATE_PROTECTION=0
     # OPCACHE_FILE_UPDATE_PROTECTION=0
 
     volumes:
