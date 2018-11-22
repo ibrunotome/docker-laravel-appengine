@@ -1,7 +1,4 @@
-# Laravel dockerized with official Google App Engine flexible php environment + swoole
-
-Laravel dockerized with: gcr.io/google-appengine/php72 + swoole, postgres:10.4-alpine, redis:4.0.11-alpine and others 
-(ready for production).
+# Laravel dockerized with official Google App Engine flexible php environment + swoole (ready for production).
 
 You can build this image for production on GAE flexible using auto managed redis (Memory Store service) and database 
 (SQL service) by Google Cloud Plataform building from Dockerfile, or run all locally using the docker-compose file.
