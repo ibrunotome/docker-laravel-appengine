@@ -15,13 +15,13 @@ services:
     - OPCACHE_VALIDATE_TIMESTAMPS=1
     - OPCACHE_FILE_UPDATE_PROTECTION=1
     - OPCACHE_SAVE_COMMENTS=1
-    - OPCACHE_ENABLE_FILE_OVERRIDE=1
+    - OPCACHE_ENABLE_FILE_OVERRIDE=0
 
     # In production environment, you can change the app.yaml with the below variables to get a better performance
     # SKIP_LOCKDOWN_DOCUMENT_ROOT=0
     # OPCACHE_VALIDATE_TIMESTAMPS=0
     # OPCACHE_FILE_UPDATE_PROTECTION=0
-    # OPCACHE_FILE_UPDATE_PROTECTION=0
+    # OPCACHE_ENABLE_FILE_OVERRIDE=1
 
     volumes:
     - .:/app
