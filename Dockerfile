@@ -22,3 +22,5 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 RUN echo "Will enable XDEBUG: $ENABLE_XDEBUG"
 RUN if [ "$ENABLE_XDEBUG" = "true" ]; then pecl install xdebug; fi
 RUN if [ "$ENABLE_XDEBUG" = "true" ]; then echo "zend_extension=/opt/php72/lib/x86_64-linux-gnu/extensions/no-debug-non-zts-20170718/xdebug.so" >> /opt/php72/lib/php.ini; fi
+
+EXPOSE 8080
