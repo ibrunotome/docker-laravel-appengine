@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-      - ENABLE_XDEBUG=true
+      - ENABLE_XDEBUG=${ENABLE_XDEBUG}
     container_name: default-service-app
     ports:
     - 80:8080
