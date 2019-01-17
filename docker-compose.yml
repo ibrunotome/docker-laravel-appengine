@@ -20,7 +20,7 @@ services:
     # In production environment, you can change the app.yaml with the below variables to get a better performance
     # SKIP_LOCKDOWN_DOCUMENT_ROOT=0
     # OPCACHE_VALIDATE_TIMESTAMPS=0
-    # OPCACHE_FILE_UPDATE_PROTECTION=0
+    # OPCACHE_FILE_UPDATE_PROTECTION=0 (can be 0 since deploys are atomic)
     # OPCACHE_ENABLE_FILE_OVERRIDE=1
 
     volumes:
@@ -28,9 +28,8 @@ services:
     depends_on:
     - pgsql
     - pgsql-tests
-    - redis-broadcast
     - redis-cache
-    - redis-queue
+    - redis-default
     networks:
     - default-network
 
@@ -62,31 +61,21 @@ services:
     networks:
     - default-network
 
-  redis-broadcast:
-    image: redis:4.0.11-alpine
-    container_name: default-service-redis-broadcast
+  redis-default:
+    image: redis:4.0.11
+    container_name: default-redis
     volumes:
-    - default-redis-broadcast:/data
-    ports:
-    - 6376:6379
-    networks:
-    - default-network
-
-  redis-cache:
-    image: redis:4.0.11-alpine
-    container_name: default-service-redis-cache
-    volumes:
-    - default-redis-cache:/data
+    - default-redis:/data
     ports:
     - 6377:6379
     networks:
     - default-network
 
-  redis-queue:
-    image: redis:4.0.11-alpine
-    container_name: default-service-redis-queue
+  redis-cache:
+    image: redis:4.0.11
+    container_name: default-redis-cache
     volumes:
-    - default-redis-queue:/data
+    - default-redis-cache:/data
     ports:
     - 6378:6379
     networks:
@@ -100,9 +89,7 @@ volumes:
     driver: local
   default-pgsql-tests:
     driver: local
-  default-redis-broadcast:
+  default-redis:
     driver: local
   default-redis-cache:
-    driver: local
-  default-redis-queue:
     driver: local
