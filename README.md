@@ -57,6 +57,12 @@ If you wanna to use php-fpm instead of swoole extension, then remove it from `ph
 uncomment the program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`
 or call the gcr.io/google-appengine/php72:latest directly from the docker-compose.yml file.
 
+## Example of repo using this container
+
+https://github.com/ibrunotome/laravel-api-templates
+
+Just choose one of the architetures, and run `docker-compose up`. It's up and running :)
+
 ## F.A.Q
 
 - **Can I use this image with pure php or other frameworks instead of Laravel?** *Sure*
