@@ -25,4 +25,5 @@ skip_files:
   - key: value
 
 env_variables:
+  OPCACHE_SAVE_COMMENTS: 0
   KEY: VALUE
