@@ -16,9 +16,7 @@ the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
-I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable 
-swoole extension to get better performance (almost 400 reqs/sec on a real laravel world application with database/redis, etc). 
-If you want to use swoole with laravel, you can install one of the following packages: 
+I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance (almost 400 reqs/sec on a real laravel world application with database/redis, etc). If you wanna use swoole with laravel, you can install one of the following packages: 
 
 #### swooletw/laravel-swoole
 
@@ -26,30 +24,24 @@ This package offers an easy plug and play of swoole into your Laravel applicatio
 
 https://github.com/swooletw/laravel-swoole 
 
-After that, you have published the package configs and set the port on `swoole_http.php` file to match with the port that
-you are listening on your upstream of `nginx.conf` file (the current port is `9000`), and set start the server on 
-`supervisord.conf`, you just need to start your server and the nginx acts as a reverse proxy to your swoole server.
+After that, you have published the package configs and set the port on `swoole_http.php` file to match with the port that you are listening on your upstream of `nginx.conf` file (the current port is `9000`), and set start the server on `supervisord.conf`, you just need to start your server and the nginx acts as a reverse proxy to your swoole server.
 
 #### hhxsv5/laravel-s
 
-If you want to put your hands in many of the truly skills of the swoole (goroutines, asyncronous tasks/events, 
-millisecond cron jobs), you can install the following package.
+If you want to put your hands in many of the truly skills of the swoole (goroutines, asyncronous tasks/events, millisecond cron jobs), you can install the following package.
 
 https://github.com/hhxsv5/laravel-s
 
 
 ## FPM
 
-If you wanna to use php-fpm instead of swoole extension (seriously, WHY?), then remove it from `php.ini` and 
-`supervisord.conf`, uncomment the program of `supervisord.conf` file and remove the related lines of swoole from 
-`Dockerfile` or call the gcr.io/google-appengine/php72:latest directly from the docker-compose.yml file.
+If you wanna use php-fpm instead of swoole extension (seriously, WHY?), then remove swoole extension from `php.ini` and the program from `supervisord.conf`, uncomment the swoole program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
 
 ## Example of repo using this container
 
 https://github.com/ibrunotome/laravel-api-templates
 
-The above package use the hhxsv5/laravel-s package. Just choose one of the architectures 
-(default delivered by Laravel, or a structure inspired in DDD), and run `docker-compose up`. It's up and running :)
+The above repo use the hhxsv5/laravel-s package. Just choose one of the architectures (default delivered by Laravel, or a structure inspired in DDD), and run `docker-compose up`. It's up and running :)
 
 ## F.A.Q
 
@@ -57,8 +49,9 @@ The above package use the hhxsv5/laravel-s package. Just choose one of the archi
 
 ## How to use it locally
 
-- You need to have docker installed.
-- Put docker-compose.yml file on the root of your laravel project.
+- You need to have docker and docker-compose installed.
+- Put the files of this repo in the root of your laravel project.
+- Configure your .env to point to the docker-compose services (like `pgsql` for db host, or `redis-cache` for redis host)
 - Run ```docker-compose run app bash -c "composer update"```
 - Run ```docker-compose run app bash -c "php artisan migrate:fresh --seed"```
 - Run ```docker-compose up -d```
