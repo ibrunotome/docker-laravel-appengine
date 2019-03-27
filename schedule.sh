@@ -4,8 +4,7 @@ if [[ "$APP_ENV" = "production" ]]; then
     chmod -R 755 bootstrap/cache
     chmod -R 755 storage
     rm -r bootstrap/cache/*.php
-    php artisan config:cache
-    php artisan route:cache
+    php artisan optimize
     chown -R www-data.www-data ./
 fi
 
