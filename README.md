@@ -28,14 +28,14 @@ After that, you have published the package configs and set the port on `swoole_h
 
 #### hhxsv5/laravel-s
 
-If you want to put your hands in many of the truly skills of the swoole (goroutines, asyncronous tasks/events, millisecond cron jobs), you can install the following package.
+If you want to put your hands in many of the truly skills of swoole (goroutines, asyncronous tasks/events, millisecond cron jobs), you can install the following package.
 
 https://github.com/hhxsv5/laravel-s
 
 
 ## FPM
 
-If you wanna use php-fpm instead of swoole extension (seriously, WHY?), then remove swoole extension from `php.ini` and the program from `supervisord.conf`, uncomment the swoole program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
+If you wanna use php-fpm instead of swoole extension (seriously, WHY?), so remove swoole extension from `php.ini` and the program from `supervisord.conf`, uncomment the swoole program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
 
 ## Example of repo using this container
 
