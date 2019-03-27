@@ -8,11 +8,13 @@ RUN apt-get update -y
 RUN apt-get install unzip -y
 RUN apt-get install autoconf -y
 RUN apt-get install build-essential -y
-RUN pecl install swoole
+
+# Swoole
+RUN pecl install swoole-4.2.13
 
 COPY . $APP_DIR
 RUN chown -R www-data.www-data $APP_DIR
-
+RUN /bin/bash /build-scripts/move-config-files.sh
 RUN /build-scripts/composer.sh;
 
 ENTRYPOINT ["/build-scripts/entrypoint.sh"]
