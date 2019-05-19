@@ -3,90 +3,45 @@ services:
   app:
     build:
       context: .
-      args:
-        - ENABLE_XDEBUG=${ENABLE_XDEBUG}
-    container_name: default-service-app
+    container_name: default-api-app
     ports:
       - 80:8080
     environment:
       - DOCUMENT_ROOT=/app/public
-      - DISABLE_FUNCTIONS=
       - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
       - OPCACHE_SAVE_COMMENTS=1
-
-    # In production environment, you can change the app.yaml with the below variables to get a better performance
-    # SKIP_LOCKDOWN_DOCUMENT_ROOT=0
-    # OPCACHE_VALIDATE_TIMESTAMPS=0
-    # OPCACHE_FILE_UPDATE_PROTECTION=0 (can be 0 since deploys are atomic)
-    # OPCACHE_ENABLE_FILE_OVERRIDE=1
-
+      - OPCACHE_VALIDATE_TIMESTAMPS=1
     volumes:
       - .:/app
     depends_on:
       - pgsql
-      - pgsql-tests
-      - redis-cache
-      - redis-default
-    networks:
-      - default-network
+      - redis
 
   pgsql:
-    image: postgres:10.4-alpine
-    container_name: default-service-pgsql
+    image: launcher.gcr.io/google/postgresql10
+    container_name: default-api-pgsql
     ports:
-      - 5433:5432
+      - 5432:5432
     environment:
       POSTGRES_DB: default
       POSTGRES_USER: default
       POSTGRES_PASSWORD: default
     volumes:
       - default-pgsql:/var/lib/postgresql/data
-    networks:
-      - default-network
 
-  pgsql-tests:
-    image: postgres:10.4-alpine
-    container_name: default-service-pgsql-tests
-    ports:
-      - 5434:5432
-    environment:
-      POSTGRES_DB: default_tests
-      POSTGRES_USER: default_tests
-      POSTGRES_PASSWORD: default_tests
-    volumes:
-      - default-pgsql-tests:/var/lib/postgresql/data
-    networks:
-      - default-network
-
-  redis-default:
-    image: redis:4.0.11
-    container_name: default-redis
+  redis:
+    image: launcher.gcr.io/google/redis4
+    container_name: default-api-redis
     volumes:
       - default-redis:/data
     ports:
-      - 6377:6379
-    networks:
-      - default-network
-
-  redis-cache:
-    image: redis:4.0.11
-    container_name: default-redis-cache
-    volumes:
-      - default-redis-cache:/data
-    ports:
-      - 6378:6379
-    networks:
-      - default-network
+      - 6379:6379
 
 networks:
-  default-network:
-    driver: bridge
+  default:
+    name: default-api_default
 volumes:
   default-pgsql:
     driver: local
-  default-pgsql-tests:
-    driver: local
   default-redis:
-    driver: local
-  default-redis-cache:
     driver: local

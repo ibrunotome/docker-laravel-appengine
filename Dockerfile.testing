@@ -1,5 +1,6 @@
 FROM gcr.io/google-appengine/php72:latest
 
+ARG ENABLE_XDEBUG
 ARG COMPOSER_FLAGS='--no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader'
 ENV COMPOSER_FLAGS=${COMPOSER_FLAGS}
 
@@ -31,5 +32,10 @@ RUN /build-scripts/composer.sh;
 
 ENTRYPOINT ["/build-scripts/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+# Option to install xdebug
+RUN echo "Will enable XDEBUG: $ENABLE_XDEBUG"
+RUN if [ "$ENABLE_XDEBUG" = "true" ]; then pecl install xdebug; fi
+RUN if [ "$ENABLE_XDEBUG" = "true" ]; then echo "zend_extension=/opt/php72/lib/x86_64-linux-gnu/extensions/no-debug-non-zts-20170718/xdebug.so" >> /opt/php72/lib/php.ini; fi
 
 EXPOSE 8080

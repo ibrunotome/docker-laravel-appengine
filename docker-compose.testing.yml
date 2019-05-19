@@ -1,0 +1,50 @@
+version: '3.6'
+services:
+  app-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.testing
+      args:
+        - ENABLE_XDEBUG=true
+    container_name: testing-api-app
+    ports:
+      - 80:8080
+    environment:
+      - DOCUMENT_ROOT=/app/public
+      - SKIP_LOCKDOWN_DOCUMENT_ROOT=true
+      - OPCACHE_SAVE_COMMENTS=1
+      - OPCACHE_VALIDATE_TIMESTAMPS=1
+    volumes:
+      - .:/app
+    depends_on:
+      - pgsql-tests
+      - redis-tests
+
+  pgsql-tests:
+    image: launcher.gcr.io/google/postgresql10
+    container_name: testing-api-pgsql-tests
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: testing_tests
+      POSTGRES_USER: testing_tests
+      POSTGRES_PASSWORD: testing_tests
+    volumes:
+      - testing-pgsql-tests:/var/lib/postgresql/data
+
+  redis-tests:
+    image: launcher.gcr.io/google/redis4
+    container_name: testing-api-redis-tests
+    volumes:
+      - testing-redis-tests:/data
+    ports:
+      - 6378:6379
+
+networks:
+  default:
+    name: testing-api_default
+volumes:
+  testing-pgsql-tests:
+    driver: local
+  testing-redis-tests:
+    driver: local

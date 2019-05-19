@@ -2,17 +2,13 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/ibrunotome/docker-laravel-appengine/branches/master/badge.svg)](https://semaphoreci.com/ibrunotome/docker-laravel-appengine)
 
-You can build this image for production on GAE flexible using auto managed redis (Memory Store service) and database 
-(SQL service) by Google Cloud Plataform building from Dockerfile, or run all locally using the docker-compose file.
+You can build this image for production on GAE flexible using auto managed redis (Memory Store service) and database (SQL service) by Google Cloud Plataform building from Dockerfile, or run all locally using the docker-compose file.
 
 ## Tips to customization
 
-With this container you can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf`, `fastcgi_params`, 
-`gzip_params`, `supervisord.conf` and `php-fpm.conf` files, just add them to the root folder and make your changes, 
-they will be used on the next `docker-compose up --build` or on your next deploy to GAE using `gcloud app deploy`
+With this container you can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf`, `fastcgi_params`, `gzip_params`, `supervisord.conf` and `php-fpm.conf` files, just add them to the root folder and make your changes, they will be used on the next `docker-compose up --build` or on your next deploy to GAE using `gcloud app deploy`
 
-The `suppervisord.conf` file is ready to run the swoole server and horizon at the start, and 
-the `php artisan schedule:run` command each minute.
+The `suppervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
@@ -60,7 +56,7 @@ The above repo use the hhxsv5/laravel-s package. Just choose one of the architec
 
 ## How to deploy it to Google App Engine (GAE)
 
-Just put all the files on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`, and deploy your application with `gcloud app deploy` command. That's it 🎉. You can learn more about GAE here: https://cloud.google.com/appengine/docs/flexible/
+Just put all the files of this repo on the root of your laravel project, then change your [app.yaml](https://cloud.google.com/appengine/docs/flexible/php/configuring-your-app-with-app-yaml) section: `runtime: php` to `runtime: custom`, and deploy your application with `gcloud app deploy` command. That's it 🎉. You can learn more about GAE here: https://cloud.google.com/appengine/docs/flexible/
 
 ## Deploy to GAE using a CI/CD pipeline
 

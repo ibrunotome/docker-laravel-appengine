@@ -12,7 +12,6 @@ resources:
 
 runtime_config:
   document_root: public
-  whitelist_functions: exec,proc_open,proc_close
   enable_stackdriver_integration: true
 
 readiness_check:
