@@ -8,7 +8,7 @@ You can build this image for production on GAE flexible using auto managed redis
 
 With this container you can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf`, `fastcgi_params`, `gzip_params`, `supervisord.conf` and `php-fpm.conf` files, just add them to the root folder and make your changes, they will be used on the next `docker-compose up --build` or on your next deploy to GAE using `gcloud app deploy`
 
-The `suppervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
+The `supervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
 
 ## Swoole
 
