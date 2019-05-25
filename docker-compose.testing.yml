@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.testing
-      args:
-        - ENABLE_XDEBUG=true
     container_name: testing-api-app
     ports:
       - 80:8080
