@@ -10,6 +10,12 @@ With this container you can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-
 
 The `supervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
 
+## Example of repo using this container
+
+https://github.com/ibrunotome/laravel-api-templates
+
+The above repo use the swooletw/laravel-swoole package. Just choose one of the structures (default delivered by Laravel, or a structure inspired in DDD), and run `docker-compose up`. It's up and running :)
+
 ## Swoole
 
 I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance (almost 400 reqs/sec on a real laravel world application with database/redis, etc). If you wanna use swoole with laravel, you can install one of the following packages: 
@@ -28,16 +34,9 @@ If you want to put your hands in many of the truly skills of swoole (goroutines,
 
 https://github.com/hhxsv5/laravel-s
 
-
 ## FPM
 
 If you wanna use php-fpm instead of swoole extension (seriously, WHY?), so remove swoole extension from `php.ini` and the program from `supervisord.conf`, uncomment the swoole program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
-
-## Example of repo using this container
-
-https://github.com/ibrunotome/laravel-api-templates
-
-The above repo use the hhxsv5/laravel-s package. Just choose one of the architectures (default delivered by Laravel, or a structure inspired in DDD), and run `docker-compose up`. It's up and running :)
 
 ## F.A.Q
 
