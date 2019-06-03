@@ -6,7 +6,7 @@ You can build this image for production on GAE flexible using auto managed redis
 
 ## Tips to customization
 
-With this container you can edit `php.ini`, `php-cli.ini`, `nginx.conf`, `nginx-http.conf`, `nginx-app.conf`, `fastcgi_params`, `gzip_params`, `supervisord.conf` and `php-fpm.conf` files, just add them to the root folder and make your changes, they will be used on the next `docker-compose up --build` or on your next deploy to GAE using `gcloud app deploy`
+With this container you can edit `php.ini`, `nginx.conf`, `fastcgi_params`, `gzip_params`, `supervisord.conf` and `php-fpm.conf` files, just add them to the root folder and make your changes, they will be used on the next `docker-compose up --build` or on your next deploy to GAE using `gcloud app deploy`. All the original files related can be found [here](https://github.com/GoogleCloudPlatform/php-docker/tree/master/php-base).
 
 The `supervisord.conf` file is ready to run the swoole server and horizon at the start, and the `php artisan schedule:run` command each minute.
 
@@ -18,7 +18,7 @@ The above repo use the swooletw/laravel-swoole package. Just choose one of the s
 
 ## Swoole
 
-I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance (almost 400 reqs/sec on a real laravel world application with database/redis, etc). If you wanna use swoole with laravel, you can install one of the following packages: 
+I did some edits in Dockerfile, extending the official image (gcr.io/google-appengine/php72:latest) to enable swoole extension to get better performance (almost 400 reqs/sec on a real laravel world application with database/redis, etc) and 3000 reqs/sec with nginx micro cache. If you wanna use swoole with laravel, you can install one of the following packages: 
 
 #### swooletw/laravel-swoole
 
@@ -36,7 +36,7 @@ https://github.com/hhxsv5/laravel-s
 
 ## FPM
 
-If you wanna use php-fpm instead of swoole extension (seriously, WHY?), so remove swoole extension from `php.ini` and the program from `supervisord.conf`, uncomment the swoole program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
+If you wanna use php-fpm instead of swoole extension (seriously, WHY?), so remove swoole extension from `php.ini` and the swoole program from `supervisord.conf`, uncomment the php-fpm program of `supervisord.conf` file and remove the related lines of swoole from `Dockerfile`.
 
 ## F.A.Q
 
