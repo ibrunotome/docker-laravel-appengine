@@ -18,7 +18,7 @@ services:
       - redis
 
   pgsql:
-    image: launcher.gcr.io/google/postgresql10
+    image: launcher.gcr.io/google/postgresql11
     container_name: default-api-pgsql
     ports:
       - 5432:5432
