@@ -19,7 +19,7 @@ services:
       - redis-tests
 
   pgsql-tests:
-    image: launcher.gcr.io/google/postgresql10
+    image: launcher.gcr.io/google/postgresql11
     container_name: testing-api-pgsql-tests
     ports:
       - 5434:5432
