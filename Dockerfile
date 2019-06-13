@@ -1,8 +1,9 @@
 FROM gcr.io/google-appengine/php72:latest
 
-ARG COMPOSER_FLAGS='--no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader'
+ARG COMPOSER_FLAGS='--prefer-dist --ignore-platform-reqs --optimize-autoloader'
 ENV COMPOSER_FLAGS=${COMPOSER_FLAGS}
 ENV SWOOLE_VERSION=4.3.4
+ENV DOCUMENT_ROOT=/app/public
 
 COPY . $APP_DIR
 
