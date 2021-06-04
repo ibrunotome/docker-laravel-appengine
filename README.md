@@ -1,5 +1,11 @@
 # Laravel dockerized with official Google App Engine flexible php environment + swoole (ready for production).
 
+## Repo archived on 2021-06-04
+
+I've been using Kubernetes for almost two years now and I don't see any reason for anyone to use GAE, it's much more expensive and doesn't give any advantage over GKE, in fact, it has many disadvantages. Also, there is no more reason to use this third packages for swoole since it's now available as an oficcial package Octane.
+
+---
+
 You can build this image for production on GAE flexible using auto managed redis (Memory Store service) and database (SQL service) by Google Cloud Plataform building from Dockerfile, or run all locally using the docker-compose file.
 
 ## Tips to customization
