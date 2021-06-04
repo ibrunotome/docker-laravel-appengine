@@ -71,9 +71,3 @@ steps:
   args: ['app', 'deploy', '--no-promote']
 timeout: '1800s'
 ```
-
-## Donations
-
-**BTC:** 3FBtaV7ekmKMxq9pDPUqnxwLB5V48DayVx
-
-**NANO:** xrb_3d68nt9yttgok7a54n8pakyz7jkp65dgzhcycjz1397kno1iog493bxsmxa9
